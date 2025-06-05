@@ -2,10 +2,7 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { styles } from "@/components/weather-screen/styles/WeatherBodyStyles";
 import { useAppSelector } from "@/store";
-
-const kelvinToCelsius = (kelvin: number): string => {
-  return (kelvin - 273.15).toFixed(0) + "°C";
-};
+import { kelvinToCelsius } from "@/helpers/kelvinToCelsius";
 
 const WeatherBody = () => {
   const { weatherData } = useAppSelector((state) => state.weather);
@@ -20,23 +17,23 @@ const WeatherBody = () => {
 
   const details = [
     {
-      label: "Відчувається як",
+      label: "Feels like",
       value: kelvinToCelsius(weatherData.main.feels_like),
     },
     {
-      label: "Вологість",
+      label: "Humidity",
       value: `${weatherData.main.humidity}%`,
     },
     {
-      label: "Вітер",
+      label: "Wind speed",
       value: `${weatherData.wind.speed.toFixed(1)} м/с`,
     },
     {
-      label: "Тиск",
+      label: "Pressure",
       value: `${weatherData.main.pressure} гПа`,
     },
     {
-      label: "Видимість",
+      label: "Visibility",
       value: `${(weatherData.visibility / 1000).toFixed(0)} км`,
     },
   ];
@@ -47,7 +44,7 @@ const WeatherBody = () => {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Деталі сьогодні</Text>
+        <Text style={styles.sectionTitle}>Details</Text>
         {weatherData && (
           <View style={styles.detailsGrid}>
             {details.map((item, index) => (
