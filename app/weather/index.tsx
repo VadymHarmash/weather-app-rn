@@ -1,10 +1,10 @@
 import { View } from "react-native";
-import SignUpScreen from "@/screens/SignUpScreen";
+import WeatherScreen from "@/screens/WeatherScreen";
 
 export default function HomeScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <SignUpScreen />
+      <WeatherScreen />
     </View>
   );
 }
