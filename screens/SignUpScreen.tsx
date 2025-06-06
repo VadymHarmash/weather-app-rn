@@ -26,9 +26,13 @@ const SignUpScreen = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert("Registration successful!");
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error("Registration error:", e);
-      alert("Registration failed: " + e.message);
+      if (e instanceof Error) {
+        alert("Registration failed: " + e.message);
+      } else {
+        alert("Registration failed: An unknown error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -38,9 +42,13 @@ const SignUpScreen = () => {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (e: any) {
-      console.error("Sign in error:", e);
-      alert("Sign in failed: " + e.message);
+    } catch (error) {
+      console.error("Sign in error:", error);
+      if (error instanceof Error) {
+        alert("Sign in failed: " + error.message);
+      } else {
+        alert("Sign in failed: An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }

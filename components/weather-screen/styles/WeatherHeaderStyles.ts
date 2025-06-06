@@ -4,7 +4,7 @@ import { COLORS } from "@/constants/colors";
 export const styles = StyleSheet.create({
   headerContainer: {
     alignItems: "center",
-    paddingVertical: 40,
+    paddingVertical: 60,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.borderPurple,
   },
@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
   },
   logoutButton: {
     position: "absolute",
-    top: 0,
+    top: 10,
     right: 0,
     backgroundColor: COLORS.redColor,
     paddingVertical: 8,

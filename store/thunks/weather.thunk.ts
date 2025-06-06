@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $axios } from "@/store/axios";
 import { IWeatherDataEntry } from "@/interfaces/IWeatherData.interface";
+// @ts-ignore
+import { AxiosError } from "axios";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 const API_KEY = "cfd3e97e1333d6f64be43d8b9fea3fb8";
@@ -28,19 +30,21 @@ export const fetchWeatherByCity = createAsyncThunk<
       params: params,
     });
     return response.data;
-  } catch (e: any) {
-    if (e.response) {
-      console.error("API error:", e.response.data);
-      console.error("Error status:", e.response.status);
+  } catch (e) {
+    const error = e as AxiosError;
+    if (error.response) {
+      console.error("API error:", error.response.data);
+      console.error("Error status:", error.response.status);
       return rejectWithValue(
-        e.response.data.message || `Error: ${e.response.status}`,
+        (error.response.data as { message: string }).message ||
+          `Error: ${error.response.status}`,
       );
-    } else if (e.request) {
-      console.error("No API response:", e.request);
+    } else if (error.request) {
+      console.error("No API response:", error.request);
       return rejectWithValue("No server response.");
     } else {
-      console.error("Request error:", e.message);
-      return rejectWithValue(e.message || "Unexpected error.");
+      console.error("Request error:", error.message);
+      return rejectWithValue(error.message || "Unexpected error.");
     }
   }
 });
