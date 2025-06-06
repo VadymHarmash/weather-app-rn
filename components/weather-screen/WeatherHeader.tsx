@@ -106,7 +106,7 @@ const WeatherHeader = () => {
               geocode[0].city || geocode[0].subregion || geocode[0].name;
             if (city) {
               dispatch(fetchWeatherByCity(city));
-              dispatch(fetchWeatherForecastByCity(city)); // Fetch forecast for current city
+              dispatch(fetchWeatherForecastByCity(city));
               await SecureStore.setItemAsync("lastKnownCity", city);
             } else {
               setLocationError("Error getting location. City not found.");
