@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, ActivityIndicator } from "react-native";
-import { styles } from "@/components/weather-screen/styles/WeatherHeaderStyles";
+import { styles } from "@/components/weather-screen/styles/WeatherLocationStatusDisplayStyles";
 import { COLORS } from "@/constants/colors";
 import { IWeatherDataEntry } from "@/interfaces/IWeatherData.interface";
 

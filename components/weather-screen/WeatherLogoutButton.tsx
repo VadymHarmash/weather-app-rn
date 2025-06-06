@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Text } from "react-native";
-import { styles } from "@/components/weather-screen/styles/WeatherHeaderStyles";
+import { styles } from "@/components/weather-screen/styles/WeatherLogoutButtonStyles";
 import { FIREBASE_AUTH } from "@/FirebaseConfig";
 import { useAppDispatch } from "@/store";
 import { resetWeatherState } from "@/store/slices/weather.slice";

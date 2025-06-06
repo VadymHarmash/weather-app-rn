@@ -2,12 +2,6 @@ import { StyleSheet } from "react-native";
 import { COLORS } from "@/constants/colors";
 
 export const styles = StyleSheet.create({
-  headerContainer: {
-    alignItems: "center",
-    paddingVertical: 60,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.borderPurple,
-  },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -33,5 +27,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  searchButtonText: {
+    color: COLORS.textWhite,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

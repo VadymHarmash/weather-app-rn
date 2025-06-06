@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TextInput, TouchableOpacity, Text } from "react-native";
-import { styles } from "@/components/weather-screen/styles/WeatherHeaderStyles";
+import { styles } from "@/components/weather-screen/styles/WeatherSearchInputStyles";
 import { COLORS } from "@/constants/colors";
 
 interface SearchInputProps {

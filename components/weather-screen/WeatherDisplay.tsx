@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { styles } from "@/components/weather-screen/styles/WeatherHeaderStyles";
+import { styles } from "@/components/weather-screen/styles/WeatherDisplayStyles";
 import { kelvinToCelsius } from "@/helpers/kelvinToCelsius";
 import { IWeatherDataEntry } from "@/interfaces/IWeatherData.interface";
 

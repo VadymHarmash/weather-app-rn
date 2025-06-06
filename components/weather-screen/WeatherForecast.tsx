@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  Image,
-} from "react-native";
+import { SafeAreaView, ScrollView, View, Text, Image } from "react-native";
 import { useAppSelector } from "@/store";
 import { styles } from "@/components/weather-screen/styles/WeatherForecastStyles";
 
