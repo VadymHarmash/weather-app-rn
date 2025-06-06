@@ -2,6 +2,6 @@ import { IWeatherDataEntry } from "@/interfaces/IWeatherData.interface";
 
 export interface IWeatherSlice {
   weatherData: IWeatherDataEntry | null;
-  status: "loading" | "failed" | "success" | null;
+  status: "idle" | "loading" | "succeeded" | "failed" | null;
   error: string | null;
 }
