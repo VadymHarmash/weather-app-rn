@@ -3,6 +3,7 @@ import { View, Text, ScrollView } from "react-native";
 import { styles } from "@/components/weather-screen/styles/WeatherBodyStyles";
 import { useAppSelector } from "@/store";
 import { kelvinToCelsius } from "@/helpers/kelvinToCelsius";
+import WeatherForecast from "@/components/weather-screen/WeatherForecast";
 
 const WeatherBody = () => {
   const { weatherData } = useAppSelector((state) => state.weather);

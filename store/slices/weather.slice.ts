@@ -1,11 +1,15 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import { IWeatherSlice } from "@/interfaces/slice/weather.slice.interface";
-import { fetchWeatherByCity } from "@/store/thunks/weather.thunk";
+import {
+  fetchWeatherByCity,
+  fetchWeatherForecastByCity,
+} from "@/store/thunks/weather.thunk";
 
 const initialState: IWeatherSlice = {
   weatherData: null,
   status: null,
   error: null,
+  forecast: null,
 };
 
 export const resetWeatherState = createAction("weather/resetState");
@@ -28,6 +32,16 @@ export const weatherSlice = createSlice({
       })
       .addCase(resetWeatherState, (state) => {
         return { ...initialState };
+      })
+      .addCase(fetchWeatherForecastByCity.pending, (state) => {
+        state.error = "";
+      })
+      .addCase(fetchWeatherForecastByCity.fulfilled, (state, action) => {
+        state.forecast = action.payload;
+        state.error = "";
+      })
+      .addCase(fetchWeatherForecastByCity.rejected, (state, action) => {
+        state.error = action.payload as string;
       });
   },
 });

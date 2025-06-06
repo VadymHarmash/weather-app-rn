@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { styles } from "@/components/weather-screen/styles/WeatherHeaderStyles";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { fetchWeatherByCity } from "@/store/thunks/weather.thunk";
+import {
+  fetchWeatherByCity,
+  fetchWeatherForecastByCity, // Imported the new thunk
+} from "@/store/thunks/weather.thunk";
 import * as Location from "expo-location";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -73,6 +76,7 @@ const WeatherHeader = () => {
         if (storedCity) {
           if (isConnected) {
             dispatch(fetchWeatherByCity(storedCity));
+            dispatch(fetchWeatherForecastByCity(storedCity)); // Fetch forecast as well
           }
         }
       } catch (e) {
@@ -102,6 +106,7 @@ const WeatherHeader = () => {
               geocode[0].city || geocode[0].subregion || geocode[0].name;
             if (city) {
               dispatch(fetchWeatherByCity(city));
+              dispatch(fetchWeatherForecastByCity(city)); // Fetch forecast for current city
               await SecureStore.setItemAsync("lastKnownCity", city);
             } else {
               setLocationError("Error getting location. City not found.");
@@ -158,6 +163,7 @@ const WeatherHeader = () => {
     if (cityInput.trim()) {
       if (!isOffline) {
         dispatch(fetchWeatherByCity(cityInput.trim()));
+        dispatch(fetchWeatherForecastByCity(cityInput.trim())); // Fetch forecast on search
         SecureStore.setItemAsync("lastKnownCity", cityInput.trim()).catch(
           (e) => {
             console.error("Failed to save searched city to SecureStore:", e);

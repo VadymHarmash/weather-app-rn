@@ -1,8 +1,10 @@
-import { SafeAreaView, StatusBar, View } from "react-native";
+import { SafeAreaView, StatusBar, View, ScrollView } from "react-native";
 import WeatherHeader from "@/components/weather-screen/WeatherHeader";
 import WeatherBody from "@/components/weather-screen/WeatherBody";
 import { styles } from "@/screens/styles/WeatherScreenStyles";
 import { COLORS } from "@/constants/colors";
+import WeatherForecast from "@/components/weather-screen/WeatherForecast";
+import React from "react";
 
 const WeatherScreen = () => {
   return (
@@ -11,10 +13,13 @@ const WeatherScreen = () => {
         barStyle="light-content"
         backgroundColor={COLORS.primaryDarkPurple}
       />
-      <View style={styles.container}>
-        <WeatherHeader />
-        <WeatherBody />
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <WeatherHeader />
+          <WeatherBody />
+          <WeatherForecast />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
