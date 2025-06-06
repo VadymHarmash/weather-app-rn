@@ -16,34 +16,6 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
-  forecastCard: {
-    backgroundColor: COLORS.cardBackground,
-    borderRadius: 12,
-    padding: 15,
-    marginBottom: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: COLORS.borderPurple,
-  },
-  forecastDay: {
-    fontSize: 18,
-    color: COLORS.textWhite,
-    flex: 1,
-  },
-  forecastTemp: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: COLORS.accentLightPurple,
-    marginHorizontal: 10,
-  },
-  forecastDescription: {
-    fontSize: 16,
-    color: COLORS.textLightGray,
-    flex: 1.5,
-    textAlign: "right",
-  },
   detailsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -68,13 +40,6 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: COLORS.textWhite,
-  },
-  noteText: {
-    fontSize: 12,
-    color: COLORS.textLightGray,
-    textAlign: "center",
-    marginTop: 10,
-    fontStyle: "italic",
   },
   errorContainer: {
     flex: 1,
