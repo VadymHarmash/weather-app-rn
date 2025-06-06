@@ -9,18 +9,21 @@ export const styles = StyleSheet.create({
     borderBottomColor: COLORS.borderPurple,
   },
   cityName: {
+    textAlign: "center",
     fontSize: 38,
     fontWeight: "bold",
     color: COLORS.textWhite,
     marginBottom: 5,
   },
   temperature: {
+    textAlign: "center",
     fontSize: 64,
     fontWeight: "200",
     color: COLORS.accentLightPurple,
     marginBottom: 10,
   },
   description: {
+    textAlign: "center",
     fontSize: 20,
     color: COLORS.textLightGray,
   },
