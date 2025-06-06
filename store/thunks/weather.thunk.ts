@@ -30,19 +30,17 @@ export const fetchWeatherByCity = createAsyncThunk<
     return response.data;
   } catch (e: any) {
     if (e.response) {
-      console.error("Помилка відповіді API:", e.response.data);
-      console.error("Статус помилки:", e.response.status);
+      console.error("API error:", e.response.data);
+      console.error("Error status:", e.response.status);
       return rejectWithValue(
-        e.response.data.message || `Помилка: ${e.response.status}`,
+        e.response.data.message || `Error: ${e.response.status}`,
       );
     } else if (e.request) {
-      console.error("Немає відповіді від API:", e.request);
-      return rejectWithValue(
-        "Немає відповіді від сервера. Перевірте підключення до інтернету.",
-      );
+      console.error("No API response:", e.request);
+      return rejectWithValue("No server response.");
     } else {
-      console.error("Помилка при налаштуванні запиту:", e.message);
-      return rejectWithValue(e.message || "Невідома помилка.");
+      console.error("Request error:", e.message);
+      return rejectWithValue(e.message || "Unexpected error.");
     }
   }
 });

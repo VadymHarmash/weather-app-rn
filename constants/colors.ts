@@ -6,4 +6,5 @@ export const COLORS = {
   textLightGray: "#CCCCCC",
   cardBackground: "#3F126C",
   borderPurple: "#6A1B9A",
+  redColor: "#a42222",
 };

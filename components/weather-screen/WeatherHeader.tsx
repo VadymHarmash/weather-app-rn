@@ -12,6 +12,8 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { fetchWeatherByCity } from "@/store/thunks/weather.thunk";
 import { kelvinToCelsius } from "@/helpers/kelvinToCelsius";
 import * as Location from "expo-location";
+import { FIREBASE_AUTH } from "@/FirebaseConfig";
+import { resetWeatherState } from "@/store/slices/weather.slice";
 
 const WeatherHeader = () => {
   const [cityInput, setCityInput] = useState<string>("");
@@ -27,7 +29,7 @@ const WeatherHeader = () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setLocationError(
-          "Дозвіл на доступ до місцезнаходження відхилено. Будь ласка, надайте дозвіл у налаштуваннях.",
+          "You rejected location permission. Change it in settings to see the weather in your region",
         );
         setLocationLoading(false);
         return;
@@ -47,17 +49,15 @@ const WeatherHeader = () => {
           if (city) {
             dispatch(fetchWeatherByCity(city));
           } else {
-            setLocationError(
-              "Не вдалося визначити місто за вашим місцезнаходженням.",
-            );
+            setLocationError("Error getting location.");
           }
         } else {
-          setLocationError("Не вдалося визначити місцезнаходження.");
+          setLocationError("Error getting location.");
         }
       } catch (err: any) {
-        console.error("Помилка при отриманні місцезнаходження:", err);
+        console.error("Error getting location:", err);
         setLocationError(
-          `Помилка отримання місцезнаходження: ${err.message || "Невідома помилка"}`,
+          `Error getting location: ${err.message || "Unexpected error"}`,
         );
       } finally {
         setLocationLoading(false);
@@ -76,7 +76,7 @@ const WeatherHeader = () => {
     <View style={styles.searchContainer}>
       <TextInput
         style={styles.searchInput}
-        placeholder="Введіть назву міста"
+        placeholder="Type city name"
         placeholderTextColor={COLORS.textLightGray}
         value={cityInput}
         onChangeText={setCityInput}
@@ -84,7 +84,7 @@ const WeatherHeader = () => {
         autoCapitalize="words"
       />
       <TouchableOpacity style={styles.searchButton} onPress={handleSearchPress}>
-        <Text style={styles.searchButtonText}>Пошук</Text>
+        <Text style={styles.searchButtonText}>Search</Text>
       </TouchableOpacity>
     </View>
   );
@@ -95,7 +95,7 @@ const WeatherHeader = () => {
         {renderSearchInput()}
         <ActivityIndicator size="large" color={COLORS.textLightGray} />
         <Text style={{ color: COLORS.textLightGray, marginTop: 10 }}>
-          Визначаємо ваше місцезнаходження...
+          Finding your location...
         </Text>
       </View>
     );
@@ -107,7 +107,7 @@ const WeatherHeader = () => {
         {renderSearchInput()}
         <Text style={styles.errorText}>{locationError}</Text>
         <Text style={{ color: COLORS.textLightGray, marginTop: 10 }}>
-          Будь ласка, введіть місто вручну.
+          Write city to see weather.
         </Text>
       </View>
     );
@@ -119,7 +119,7 @@ const WeatherHeader = () => {
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Введіть назву міста"
+            placeholder="Type city name"
             placeholderTextColor={COLORS.textLightGray}
             value={cityInput}
             onChangeText={setCityInput}
@@ -130,10 +130,10 @@ const WeatherHeader = () => {
             style={styles.searchButton}
             onPress={handleSearchPress}
           >
-            <Text style={styles.searchButtonText}>Пошук</Text>
+            <Text style={styles.searchButtonText}>Search</Text>
           </TouchableOpacity>
         </View>
-        <Text>Завантаження...</Text>
+        <Text>Loading...</Text>
       </View>
     );
   }
@@ -144,7 +144,7 @@ const WeatherHeader = () => {
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Введіть назву міста"
+            placeholder="Type city name"
             placeholderTextColor={COLORS.textLightGray}
             value={cityInput}
             onChangeText={setCityInput}
@@ -155,12 +155,10 @@ const WeatherHeader = () => {
             style={styles.searchButton}
             onPress={handleSearchPress}
           >
-            <Text style={styles.searchButtonText}>Пошук</Text>
+            <Text style={styles.searchButtonText}>Search</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.errorText}>
-          {error || "Помилка завантаження даних."}
-        </Text>
+        <Text style={styles.errorText}>{error || "Error data loading."}</Text>
       </View>
     );
   }
@@ -171,7 +169,7 @@ const WeatherHeader = () => {
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
-            placeholder="Введіть назву міста"
+            placeholder="Type city name"
             placeholderTextColor={COLORS.textLightGray}
             value={cityInput}
             onChangeText={setCityInput}
@@ -182,28 +180,38 @@ const WeatherHeader = () => {
             style={styles.searchButton}
             onPress={handleSearchPress}
           >
-            <Text style={styles.searchButtonText}>Пошук</Text>
+            <Text style={styles.searchButtonText}>Search</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.searchButtonText}>
-          Введіть місто для пошуку погоди.
-        </Text>
+        <Text style={styles.searchButtonText}>Type city name.</Text>
       </View>
     );
   }
 
   const cityName = weatherData.name;
   const currentTemperature = kelvinToCelsius(weatherData.main.temp);
-  const description = weatherData.weather[0]?.description || "Немає опису";
+  const description = weatherData.weather[0]?.description || "No description";
   const capitalizedDescription =
     description.charAt(0).toUpperCase() + description.slice(1);
 
+  const handleLogout = async () => {
+    try {
+      await FIREBASE_AUTH.signOut();
+      dispatch(resetWeatherState());
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <View style={styles.headerContainer}>
+      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+        <Text style={styles.logoutButtonText}>Logout</Text>
+      </TouchableOpacity>
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Введіть назву міста"
+          placeholder="Type city name"
           placeholderTextColor={COLORS.textLightGray}
           value={cityInput}
           onChangeText={setCityInput}
@@ -214,7 +222,7 @@ const WeatherHeader = () => {
           style={styles.searchButton}
           onPress={handleSearchPress}
         >
-          <Text style={styles.searchButtonText}>Пошук</Text>
+          <Text style={styles.searchButtonText}>Search</Text>
         </TouchableOpacity>
       </View>
       <View>

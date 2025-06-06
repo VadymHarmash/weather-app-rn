@@ -10,7 +10,7 @@ const WeatherBody = () => {
   if (!weatherData) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Дані про погоду відсутні.</Text>
+        <Text style={styles.errorText}>Weather data isn't exist.</Text>
       </View>
     );
   }
@@ -26,15 +26,15 @@ const WeatherBody = () => {
     },
     {
       label: "Wind speed",
-      value: `${weatherData.wind.speed.toFixed(1)} м/с`,
+      value: `${weatherData.wind.speed.toFixed(1)} m/s`,
     },
     {
       label: "Pressure",
-      value: `${weatherData.main.pressure} гПа`,
+      value: `${weatherData.main.pressure} Pa`,
     },
     {
       label: "Visibility",
-      value: `${(weatherData.visibility / 1000).toFixed(0)} км`,
+      value: `${(weatherData.visibility / 1000).toFixed(0)} km`,
     },
   ];
 

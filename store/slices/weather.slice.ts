@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import { IWeatherSlice } from "@/interfaces/slice/weather.slice.interface";
 import { fetchWeatherByCity } from "@/store/thunks/weather.thunk";
 
@@ -8,8 +8,10 @@ const initialState: IWeatherSlice = {
   error: null,
 };
 
+export const resetWeatherState = createAction("weather/resetState");
+
 export const weatherSlice = createSlice({
-  name: "destinations",
+  name: "weather",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -23,6 +25,9 @@ export const weatherSlice = createSlice({
       })
       .addCase(fetchWeatherByCity.rejected, (state, action) => {
         state.error = action.payload as string;
+      })
+      .addCase(resetWeatherState, (state) => {
+        return { ...initialState };
       });
   },
 });
